@@ -1,7 +1,8 @@
 import { Environment, loadEnv } from "../src/env.ts";
 import * as postgres from "postgres";
 import { corsHeaders } from "../src/cors.ts";
-import * as example from './api/example.ts'
+import * as example from "./api/example.ts";
+import * as scaffold from "./api/scaffold.ts";
 type Split<
   T extends string,
   Separator extends string,
@@ -65,12 +66,9 @@ function allowCorsOptionsHandler(
 
 const routes = [
   makeRoute("OPTIONS", "/phonemize", allowCorsOptionsHandler),
-  makeRoute(
-    "GET",
-    "/hello-world",
-    example.handleGetRequest,
-  ),
-  
+  makeRoute("GET", "/hello-world", example.handleGetRequest),
+  makeRoute("OPTIONS", "/scaffold-project", allowCorsOptionsHandler),
+  makeRoute("POST", "/scaffold-project", scaffold.handleScaffoldRequest),
 ];
 
 Deno.serve({ port: argPort }, (req): Promise<Response> => {
