@@ -1,13 +1,12 @@
 import { load } from "https://deno.land/std/dotenv/mod.ts";
-import { userInfo } from "node:os";
+// import { userInfo } from "node:os";
 
 export type Environment = {
-  databaseUrl: string | undefined;
-  maxDbConnections: number;
+  // databaseUrl: string | undefined;
+  // maxDbConnections: number;
   environment: "test" | "prod";
+  anthropicApiKey: string;
 };
-
-
 
 export const loadEnv = async (systemEnv: Deno.Env): Promise<Environment> => {
   if (systemEnv.get("ENV_FROM_FILE")) {
@@ -24,16 +23,20 @@ export const loadEnv = async (systemEnv: Deno.Env): Promise<Environment> => {
   }
 
   return {
-    maxDbConnections,
-    databaseUrl: systemEnv.get("DATABASE_URL"),
+    // maxDbConnections,
+    // databaseUrl: systemEnv.get("DATABASE_URL"),
+    anthropicApiKey: systemEnv.get("ANTHROPIC_API_KEY") || "",
     environment: "prod",
   };
 };
 
 export function loadTestEnv(): Environment {
   return {
-    maxDbConnections: 2,
-    databaseUrl: `postgresql://${userInfo().username}@127.0.0.1:5432/test_postgres`,
+    // maxDbConnections: 2,
+    // databaseUrl: `postgresql://${
+    //   userInfo().username
+    // }@127.0.0.1:5432/test_postgres`,
     environment: "test",
+    anthropicApiKey: "",
   };
 }

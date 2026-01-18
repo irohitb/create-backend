@@ -1,7 +1,8 @@
 {
     "imports": {
         "std/server": "https://deno.land/std@0.180.0/http/server.ts",
-        "postgres": "https://deno.land/x/postgres@v0.14.2/mod.ts"
+        "postgres": "https://deno.land/x/postgres@v0.14.2/mod.ts",
+        "@anthropic-ai/sdk": "npm:@anthropic-ai/sdk@^0.32.1"
     },
     "tasks": {
         "format": "prettier --write .",

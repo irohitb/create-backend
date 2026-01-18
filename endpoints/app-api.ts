@@ -22,7 +22,9 @@ type ExtractPathParams<
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "OPTIONS";
 
 const env = await loadEnv(Deno.env);
-const pool = new postgres.Pool(env.databaseUrl, env.maxDbConnections, true);
+// const pool = env.databaseUrl
+//   ? new postgres.Pool(env.databaseUrl, env.maxDbConnections, true)
+//   : (null as any); // For endpoints that don't need DB
 
 function makeRoute<S extends string>(
   method: HttpMethod,
@@ -31,7 +33,7 @@ function makeRoute<S extends string>(
     req: Request,
     matches: ExtractPathParams<S>,
     e: Environment,
-    d: postgres.Pool,
+    // d: postgres.Pool,
   ) => Promise<Response>,
 ): (r: Request) => null | Promise<Response> {
   return (r: Request) => {
@@ -45,7 +47,7 @@ function makeRoute<S extends string>(
         r,
         match.pathname.groups as ExtractPathParams<S>,
         env,
-        pool,
+        // pool,
       );
     }
     return null;
@@ -59,7 +61,7 @@ function allowCorsOptionsHandler(
   _matches: unknown,
   _env: Environment,
 
-  _dbPool: postgres.Pool,
+  // _dbPool: postgres.Pool,
 ): Promise<Response> {
   return Promise.resolve(new Response("ok", { headers: corsHeaders }));
 }
