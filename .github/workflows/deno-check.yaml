@@ -1,0 +1,43 @@
+name: Deno Check
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.42.0
+
+      - name: Cache Deno dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/deno
+          key: ${{ runner.os }}-deno-${{ hashFiles('deno.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-deno-
+
+      - name: Check module cache status
+        run: deno info
+
+      - name: Run Deno Check
+        run: deno check supabase/functions/**/*.ts workers/*.ts src/*.ts endpoints/**/*.ts tests/**/*.ts workers_entry/*.ts
+
+      - name: Run Deno Lint
+        run: deno lint
+
+      # Optional additional check
+      # eventually we may want to make this required -_-
+      - name: Check Formatting
+        run: deno fmt --check
+        continue-on-error: true

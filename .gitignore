@@ -1,0 +1,35 @@
+.env
+.env.*
+.remoteenv
+*.notes
+
+node_modules
+*.pem
+*.crt
+.aws-sam
+ignoreme
+
+*.crt
+
+*.notes
+
+# ignore all audio files
+*.wav
+*.mp3
+*.ogg
+*.m4a
+*.aac
+*.flac
+*.pcm
+
+.DS_Store
+
+.zed/
+
+# Python
+__pycache__/
+
+.venv/
+venv/
+
+.python-version

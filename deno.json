@@ -1,0 +1,10 @@
+{
+    "imports": {
+        "std/server": "https://deno.land/std@0.180.0/http/server.ts",
+        "postgres": "https://deno.land/x/postgres@v0.14.2/mod.ts"
+    },
+    "tasks": {
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    }
+}
